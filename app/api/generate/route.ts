@@ -14,16 +14,8 @@ export async function POST(request : Request ){
         console.log("Invalid data")
         throw new ApiError(400,"Invalid Data")
       }
-
-      console.log(data)
-      console.log(typeof(data?.model))
-      console.log(typeof(data?.textfield))
-      console.log(typeof(data?.chooseyourway))
-      console.log(typeof(data?.generatefor))
   
-      const systemPrompt : string = `You are an expert in generating ${data?. chooseyourway} ${data?.generatefor} bios for individuals across various industries, focusing on creating profiles that highlight skills, experience,achievements and key attributes. You will generate 4 ${data?.chooseyourway}, relevant, and concise ${data?.generatefor} bios based on the user's information, regardless of their job profile or industry.`
-
-      const UserInput = data.textfield
+      const systemPrompt : string = `You are an expert in generating ${data?.chooseyourway} ${data?.generatefor} bios for individuals in the any industry(will provided by the user). You will generate 4 ${data?.chooseyourway}, relevant, and concise ${data?.generatefor} bios based on the user's information.Avoid Emojis in professional,Don't make it too bid , generate no of words in bio that are acceptable by the ${data?.generatefor} organisation, keep relevant and concise use keywords when neccessary , Don't include hashtags .`
   
       try {
         const completion = await groq.chat.completions
@@ -35,7 +27,7 @@ export async function POST(request : Request ){
                 },
                 {
                     role : "user",
-                    content : typeof(data) === "string" ? JSON.stringify(UserInput) : ''
+                    content : data?.textfield
                 }
             ],
             model : data?.model
@@ -48,7 +40,7 @@ export async function POST(request : Request ){
             {
               success: true,
               message: "Groq data received",
-              response: response || "",  // Include the actual response if needed
+              response: response || "", 
             },
             {
               status: 200,

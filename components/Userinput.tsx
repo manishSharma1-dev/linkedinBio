@@ -24,7 +24,7 @@ import Mixtral from "@/public/mistral-ai-icon.png"
 import Image from 'next/image'
 
 
-export default function Userinput() {
+export default function Userinput({ handlegroqdata } : { handlegroqdata : any }) {
     const [generating,setIsGenerating] = useState(false)
 
     const form = useForm<z.infer<typeof formSchema>>({
@@ -59,8 +59,8 @@ export default function Userinput() {
             if(!resultData){
                 throw new Error("Convverting in json failed")
             }
-
-            console.log("ResultData : ",resultData)
+            
+            handlegroqdata(resultData?.response)
 
             setIsGenerating(false)
             
