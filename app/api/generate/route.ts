@@ -4,7 +4,7 @@ import { Apiresponse } from "@/utils/Apiresponse";
 import { NextResponse } from "next/server";
 
 
-const groq = new Groq({ apiKey : prcess.env.GROQ_API_CLIENT });
+const groq = new Groq({ apiKey : process.env.GROQ_API_CLIENT });
 
 export async function POST(request : Request ){
     try {
